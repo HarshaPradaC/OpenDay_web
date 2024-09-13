@@ -1,0 +1,139 @@
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#head {
+    text-align: center;
+    background-image: url('img/kct_img.png');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    color: #1f2842;
+    padding: 90px;
+}
+
+.departments {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px; 
+    padding: 20px;
+}
+
+.department {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #ccc;
+    position: relative;
+    overflow: hidden;
+}
+
+.department img {
+    width: 100%;
+    height: auto;
+}
+
+.department-name {
+    background-color: rgba(0, 0, 0, 0.5); 
+    color: white;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    bottom: 0; 
+}
+
+.search-container {
+    position: fixed; 
+    top: 10px; 
+    right: 10px;
+}
+
+.search-container input {
+    padding: 10px;
+    width: 100%;
+    max-width: 800px;
+    font-size: 18px; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #1f2842;
+    color: #4ec1b5;
+}
+
+
+#department-details {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#department-details img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+#department-details h2 {
+    margin: 10px 0;
+    font-size: 20px;
+    color: #333;
+}
+
+#department-details a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+#department-details a:hover {
+    text-decoration: underline;
+}
+
+#pagination-controls {
+    text-align: center;
+    margin: 20px 0;
+}
+
+
+.page-button {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 0 5px;
+    background-color: #1f2842;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.page-button:hover {
+    background-color: #4ec1b5;
+}
+
+.page-button.active {
+    background-color: #4ec1b5;
+    font-weight: bold;
+}
+
+.page-button:disabled {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
+}
