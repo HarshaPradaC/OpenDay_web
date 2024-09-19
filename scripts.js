@@ -2,13 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const itemsPerPage = 100;
     let currentPage = 1;
     let allDepartments = []; 
+    let filteredDepartments = []; 
 
     function fetchDepartments(page) {
         fetch("https://openday.kumaraguru.in/api/v1/departments/")
             .then(response => response.json())
             .then(res => {
                 allDepartments = res; 
-
+                
                 const start = (page - 1) * itemsPerPage;
                 const end = start + itemsPerPage;
 
@@ -51,67 +52,66 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderPaginationControls(totalItems) {
         const paginationControls = document.getElementById('pagination-controls');
         paginationControls.innerHTML = '';
-
         const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-        
         if (currentPage > 1) {
             const prevButton = document.createElement('a');
-            prevButton.className = 'page-button';
             prevButton.textContent = 'Previous';
+            prevButton.className = 'page-button';
             prevButton.href = '#';
-            prevButton.addEventListener('click', (event) => {
+            prevButton.onclick = (event) => {
                 event.preventDefault();
                 currentPage--;
                 fetchDepartments(currentPage);
-            });
+            };
             paginationControls.appendChild(prevButton);
         }
 
-        
         for (let i = 1; i <= totalPages; i++) {
             const pageButton = document.createElement('a');
-            pageButton.className = 'page-button';
-            if (i === currentPage) {
-                pageButton.classList.add('active');
-            }
             pageButton.textContent = i;
+            pageButton.className = 'page-button';
             pageButton.href = '#';
-            pageButton.addEventListener('click', (event) => {
+            pageButton.onclick = (event) => {
                 event.preventDefault();
                 currentPage = i;
                 fetchDepartments(currentPage);
-            });
+            };
+            if (i === currentPage) {
+                pageButton.classList.add('active');
+            }
             paginationControls.appendChild(pageButton);
         }
 
         if (currentPage < totalPages) {
             const nextButton = document.createElement('a');
-            nextButton.className = 'page-button';
             nextButton.textContent = 'Next';
+            nextButton.className = 'page-button';
             nextButton.href = '#';
-            nextButton.addEventListener('click', (event) => {
+            nextButton.onclick = (event) => {
                 event.preventDefault();
                 currentPage++;
                 fetchDepartments(currentPage);
-            });
+            };
             paginationControls.appendChild(nextButton);
         }
     }
 
-    
     const searchBox = document.getElementById("search-bar");
     searchBox.addEventListener('input', () => {
         const search = searchBox.value.toLowerCase();
-        console.log(search);
+        currentPage = 1; 
 
-        const results = allDepartments.filter(department => department.name.toLowerCase().includes(search));
-        displayDepartments(results.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage));
-        renderPaginationControls(results.length);
-        console.log(results);
+        
+        filteredDepartments = allDepartments.filter(department => 
+            department.name.toLowerCase().includes(search)
+        );
+
+        
+        displayDepartments(filteredDepartments.slice(0, itemsPerPage)); 
+        renderPaginationControls(filteredDepartments.length); 
     });
 
-   
     fetchDepartments(currentPage);
 });
 
@@ -120,14 +120,11 @@ function onPress(id) {
     fetch(url)
         .then(response => response.json())
         .then(result => {
-           
             localStorage.setItem("result0", `<img src="https://picsum.photos/id/${id}/1600/600" alt="Department Image">`);
             localStorage.setItem("result1", `<h2>Department Name: ${result.name}</h2>`);
             localStorage.setItem("result2", `<p>Description: ${result.description}</p>`);
             localStorage.setItem("result3", `<h2><a href="${result.link}" target="_blank">${result.link}</a></h2>`);
             localStorage.setItem("result4", `<h2>Block: ${result.block}</h2>`);
-
-           
             window.location.href = "department.html";
         })
         .catch(error => console.error('Error fetching department details:', error));
